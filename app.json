@@ -4,6 +4,7 @@
     "slug": "insta-clone",
     "version": "1.0.0",
     "scheme": "insta-clone",
+    "newArchEnabled": true,
     "web": {
       "bundler": "metro",
       "output": "static",

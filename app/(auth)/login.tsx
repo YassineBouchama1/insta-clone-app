@@ -8,7 +8,7 @@ import { AuthError } from '~/types/auth';
 const logo = require('~/assets/icon.png');
 
 export default function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const { isAuthenticated, login } = useAuth();
@@ -31,7 +31,7 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       setErrors({}); // here clear prev errors
-      await login(username, password);
+      await login(email, password);
       router.replace('/(tabs)/feed');
     } catch (error: any) {
 
@@ -53,12 +53,12 @@ export default function Login() {
         <Ionicons name="person-outline" size={25} style={styles.icon} />
         <TextInput
           style={styles.input}
-          placeholder="Username"
-          value={username}
-          onChangeText={setUsername}
+          placeholder="email"
+          value={email}
+          onChangeText={setEmail}
         />
       </View>
-      {errors.username && <Text style={styles.errorText}>{errors.username.join(', ')}</Text>}
+      {errors.email && <Text style={styles.errorText}>{errors.email.join(', ')}</Text>}
 
       <View style={styles.inputContainer}>
         <Ionicons name="lock-closed-outline" size={25} style={styles.icon} />

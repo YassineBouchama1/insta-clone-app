@@ -1,22 +1,22 @@
 import { z } from 'zod';
 
 export const LoginSchema = z.object({
-  username: z
+  email: z
     .string()
     .min(3, 'Username must be at least 3 characters')
-    .max(50, 'Username must be less than 50 characters'),
+  ,
   password: z
     .string()
-    .min(8, 'Password must be at least 8 characters')
-    // .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-    // .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-    // .regex(/[0-9]/, 'Password must contain at least one number'),
+    .min(4, 'Password must be at least 4 characters')
+  // .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+  // .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+  // .regex(/[0-9]/, 'Password must contain at least one number'),
 });
 
 export type LoginCredentials = z.infer<typeof LoginSchema>;
 
 export interface AuthUser {
-  username: string;
+  email: string;
   token: string;
 }
 

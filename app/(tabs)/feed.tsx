@@ -1,14 +1,17 @@
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
+import { Button } from '~/components/Button';
 
 import { ScreenContent } from '~/components/ScreenContent';
 
 export default function Home() {
+
+  const router = useRouter()
   return (
     <>
       <Stack.Screen options={{ title: 'Tab Two' }} />
       <View style={styles.container}>
-        <ScreenContent path="app/(tabs)/two.tsx" title="Tab Two" />
+        <Button onPress={() => { router.push('/profile') }} title='to profil' />
       </View>
     </>
   );
