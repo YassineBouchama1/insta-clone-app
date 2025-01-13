@@ -1,17 +1,68 @@
 import '../global.css';
-
-import { Stack } from 'expo-router';
+import React from 'react';
+import { Slot, SplashScreen } from 'expo-router';
+import { useEffect, useState } from 'react';
+import AuthProvider, { useAuth } from '~/providers/AuthProvider';
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: '(tabs)/feed',
 };
 
-export default function RootLayout() {
+SplashScreen.preventAutoHideAsync();
+
+function RootLayoutNav() {
+
+  const { isLoading } = useAuth();
+
+
+  // Don't render anything until authentication check is complete
+  if (isLoading) {
+    return null;
+  }
+
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-    </Stack>
+
+    <Slot />
+
+  );
+}
+
+export default function RootLayout() {
+  const [appIsReady, setAppIsReady] = useState(false);
+
+
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+
+
+  useEffect(() => {
+    if (appIsReady) {
+      SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+
+  if (!appIsReady) {
+    return null;
+  }
+
+  return (
+    <AuthProvider>
+      <RootLayoutNav />
+    </AuthProvider>
   );
 }
